@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Menu from './MenuComponent';
 import Home from './HomeComponent';
+import Reservation from './ReservationComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponent';
 import Dishdetail from './DishdetailComponent';
@@ -65,6 +66,21 @@ const HomeNavigator = createStackNavigator({
 
 const ContactNavigator = createStackNavigator({
   Contact: { screen: Contact }
+}, {
+  navigationOptions: ({ navigation }) => ({
+    headerStyle: {
+        backgroundColor: "#512DA8"
+    },
+    headerTitleStyle: {
+        color: "#fff"            
+    },
+    headerTintColor: "#fff",
+    headerLeft: <Icon name='menu' size={24} color='white' onPress={() => navigation.toggleDrawer()} />  
+  })
+});
+
+const ReservationNavigator = createStackNavigator({
+  Reservation: { screen: Reservation }
 }, {
   navigationOptions: ({ navigation }) => ({
     headerStyle: {
@@ -150,6 +166,17 @@ const MainNavigator = createDrawerNavigator({
         drawerLabel: 'Contact',
         drawerIcon: ({ tintColor }) => (
           <Icon name='address-card' type="font-awesome" size={22} color={tintColor} />
+        )
+      },
+    },
+  Reservation: 
+    {
+      screen: ReservationNavigator,
+      navigationOptions: {
+        title: 'Reserve Table',
+        drawerLabel: 'Reserve Table',
+        drawerIcon: ({ tintColor }) => (
+          <Icon name='cutlery' type="font-awesome" size={24} color={tintColor} />
         )
       },
     },
