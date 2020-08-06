@@ -57,7 +57,7 @@ const mapStateToProps = state => {
 
             return(
                 <Swipeout right={rightButton} autoClose={true}>
-                    <Animatable.View animation="fadeInRightBig" duration={2000}>
+                    <Animatable.View animation="fadeInRightBig" duration={2000} useNativeDriver={true}>
                         <ListItem 
                             key={index} 
                             title={item.name} 

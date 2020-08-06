@@ -42,7 +42,7 @@ class About extends Component {
         if(this.props.leaders.isLoading) {
             return(
                 <ScrollView>
-                    <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+                    <Animatable.View animation="fadeInDown" duration={2000} delay={1000} useNativeDriver={true}>
                         <Card
                             title="Our History"
                             >
