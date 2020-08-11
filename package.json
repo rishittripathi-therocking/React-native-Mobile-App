@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "expo": "~38.0.8",
+    "expo-mail-composer": "~8.2.1",
     "expo-notifications": "~0.3.3",
     "expo-permissions": "~9.0.1",
     "expo-secure-store": "~9.0.1",
