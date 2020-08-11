@@ -3,6 +3,8 @@ import { Text, View , ScrollView, Picker, Switch, Button, StyleSheet, Modal, Ale
 import { Card } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 import * as Animatable from 'react-native-animatable';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
 
 class Reservation extends Component {
     constructor(props) {
@@ -34,7 +36,10 @@ class Reservation extends Component {
                 },
                 {
                     title: 'Ok',
-                    onPress: () => this.resetForm()
+                    onPress: () => {
+                        this.presentLocalNotification(this.state.guests);
+                        this.resetForm();
+                    }
                 }
             ],
             { cancelable: false}
@@ -48,6 +53,42 @@ class Reservation extends Component {
             date: ''
         });
     }
+
+    async obtainNotificationPermission() {
+        let permission = await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
+        if (permission.status !== 'granted') {
+            permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
+            if (permission.status !== 'granted') {
+                Alert.alert('Permission not granted to show notifications');
+            }
+        } 
+        else {
+            if (Platform.OS === 'android') {
+                Notifications.createChannelAndroidAsync('notify', {
+                    name: 'notify',
+                    sound: true,
+                    vibrate: true,
+                });
+            }
+        }
+        return permission;
+    }
+
+    async presentLocalNotification(guests) {
+        await this.obtainNotificationPermission();
+        Notifications.presentLocalNotificationAsync({
+            title: 'Your Reservation',
+            body: `Reservation for ${guests} requested`,
+            ios: {
+                sound: true
+            },
+            android: {
+                channelId: 'notify',
+                color: '#512DA8'
+            }
+        });
+    }
+
 
     render() {
         return(
