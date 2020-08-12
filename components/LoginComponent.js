@@ -58,63 +58,65 @@ class LoginTab extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Input
-                    placeholder="Username"
-                    leftIcon={{ type: 'font-awesome', name: 'user-o' }}
-                    onChangeText={(username) => this.setState({username})}
-                    value={this.state.username}
-                    containerStyle={styles.formInput}
-                    />
-                <Input
-                    placeholder="Password"
-                    leftIcon={{ type: 'font-awesome', name: 'key' }}
-                    onChangeText={(password) => this.setState({password})}
-                    value={this.state.password}
-                    containerStyle={styles.formInput}
-                    />
-                <CheckBox title="Remember Me"
-                    center
-                    checked={this.state.remember}
-                    onPress={() => this.setState({remember: !this.state.remember})}
-                    containerStyle={styles.formCheckbox}
-                    />
-                <View style={styles.formButton}>
-                    <Button
-                        onPress={() => this.handleLogin()}
-                        title="Login"
-                        icon={
-                            <Icon
-                                name='sign-in'
-                                type='font-awesome'            
-                                size={24}
-                                color= 'white'
-                            />
-                        }
-                        buttonStyle={{
-                            backgroundColor: "#512DA8"
-                        }}
+            <ScrollView>
+                <View style={styles.container}>
+                    <Input
+                        placeholder="Username"
+                        leftIcon={{ type: 'font-awesome', name: 'user-o' }}
+                        onChangeText={(username) => this.setState({username})}
+                        value={this.state.username}
+                        containerStyle={styles.formInput}
                         />
-                </View>
-                <View style={styles.formButton}>
-                    <Button
-                        onPress={() => this.props.navigation.navigate('Register')}
-                        title="Register"
-                        clear
-                        icon={
-                            <Icon
-                                name='user-plus'
-                                type='font-awesome'            
-                                size={24}
-                                color= 'blue'
-                            />
-                        }
-                        titleStyle={{
-                            color: "blue"
-                        }}
+                    <Input
+                        placeholder="Password"
+                        leftIcon={{ type: 'font-awesome', name: 'key' }}
+                        onChangeText={(password) => this.setState({password})}
+                        value={this.state.password}
+                        containerStyle={styles.formInput}
                         />
+                    <CheckBox title="Remember Me"
+                        center
+                        checked={this.state.remember}
+                        onPress={() => this.setState({remember: !this.state.remember})}
+                        containerStyle={styles.formCheckbox}
+                        />
+                    <View style={styles.formButton}>
+                        <Button
+                            onPress={() => this.handleLogin()}
+                            title="Login"
+                            icon={
+                                <Icon
+                                    name='sign-in'
+                                    type='font-awesome'            
+                                    size={24}
+                                    color= 'white'
+                                />
+                            }
+                            buttonStyle={{
+                                backgroundColor: "#512DA8"
+                            }}
+                            />
+                    </View>
+                    <View style={styles.formButton}>
+                        <Button
+                            onPress={() => this.props.navigation.navigate('Register')}
+                            title="Register"
+                            clear
+                            icon={
+                                <Icon
+                                    name='user-plus'
+                                    type='font-awesome'            
+                                    size={24}
+                                    color= 'blue'
+                                />
+                            }
+                            titleStyle={{
+                                color: "blue"
+                            }}
+                            />
+                    </View>
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 
@@ -151,6 +153,17 @@ class RegisterTab extends Component {
             }
         }
 
+    }
+
+    getImageFromGallery = async () => {
+        let selectImage = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+        });
+        if (!selectImage.cancelled) {
+            console.log(selectImage);
+            this.processImage(selectImage.uri);
+        }
     }
 
     processImage = async(imageUri) => {
@@ -196,6 +209,10 @@ class RegisterTab extends Component {
                     <Button
                         title="Camera"
                         onPress={this.getImageFromCamera}
+                        />
+                    <Button
+                        title="Gallery"
+                        onPress={this.getImageFromGallery}
                         />
                 </View>
                 <Input
